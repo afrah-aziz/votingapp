@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polls</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: skyblue; /* Change the background color to sky blue */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            min-height: 100vh; /* Make sure the container takes the full viewport height */
+        }
+        .container {
+            width: 50%; /* Make the container 80% of the viewport width */
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc; /* Add a border */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a box shadow */
+            text-align: center; /* Center text */
+            background-color: rgb(78, 222, 219);
+
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-family: 'Arial', sans-serif; /* Change the font */
+            color:blueviolet;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+            justify-content: center;
+        }
+        a {
+            
+            text-decoration: none;
+            color: #762f73;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .no-polls {
+            color: #777;
+        }
+        .button-styling {
+            background-color: #36627a; /* Change to your preferred bluish shade */
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px; /* Make the border-radius half of the button's height */
+            cursor: pointer;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Latest Polls</h1>
+        {% if latest_question_list %}
+            <ul>
+                {% for question in latest_question_list %}
+                    <li><a href="{% url 'detail' question.id %}">{{ question.question_text }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="no-polls">No polls are available.</p>
+        {% endif %}
+        
+        <!-- Add a button and a form for selecting the question number -->
+        <button id="resultButton" class="button-styling">View Results</button>
+        <form id="questionForm" style="display: none;">
+            <div style="text-align: center; margin-top:30px  ">
+                <label for="questionNumber">Enter Question Number: </label>
+                <input type="number" id="questionNumber" name="questionNumber" required>
+            </div>
+            <div style="text-align: center; margin-top: 10px;">
+                <button id="submitButton" class="button-styling">Submit</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        document.getElementById('resultButton').addEventListener('click', function() {
+            // Show the question number input form when the button is clicked
+            document.getElementById('questionForm').style.display = 'block';
+        });
+    
+        document.getElementById('questionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const questionNumber = document.getElementById('questionNumber').value;
+            // Redirect to /polls/${questionNumber}/results
+            window.location.href = `/polls/${questionNumber}/results/`;
+        });
+    </script>
+</body>
+</html>

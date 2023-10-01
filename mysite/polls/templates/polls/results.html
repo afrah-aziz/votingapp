@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poll Results</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: skyblue; /* Change to your preferred background color */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            width:50%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color:brown;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            color:brown;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .vote-count {
+            font-weight: bold;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ question.question_text }}</h1>
+        <ul>
+            {% for choice in question.choice_set.all %}
+                <li>{{ choice.choice_text }} - <span class="vote-count">{{ choice.votes }}</span> vote{{ choice.votes|pluralize }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
